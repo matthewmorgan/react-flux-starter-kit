@@ -70,7 +70,6 @@ gulp.task('images', function () {
       .pipe(connect.reload());
 });
 
-
 gulp.task('lint', function () {
   return gulp.src(config.paths.js)
       .pipe(lint({config: 'eslint.config.json'}))
