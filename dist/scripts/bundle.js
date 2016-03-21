@@ -47496,6 +47496,7 @@ module.exports = AuthorForm;
 'use strict';
 
 var React = require('react');
+var Link = require('react-router').Link;
 
 var AuthorList = React.createClass({displayName: "AuthorList",
   propTypes: {
@@ -47506,7 +47507,7 @@ var AuthorList = React.createClass({displayName: "AuthorList",
     var createAuthorRow = function (author) {
       return (
           React.createElement("tr", {key: author.id}, 
-            React.createElement("td", null, React.createElement("a", {href: "/#authors/" + author.id}, author.id)), 
+            React.createElement("td", null, React.createElement(Link, {to: "manageAuthor", params: {id: author.id}}, author.id)), 
             React.createElement("td", null, author.firstName, " ", author.lastName)
           )
       );
@@ -47531,7 +47532,7 @@ var AuthorList = React.createClass({displayName: "AuthorList",
 
 module.exports = AuthorList;
 
-},{"react":197}],205:[function(require,module,exports){
+},{"react":197,"react-router":28}],205:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -47594,6 +47595,13 @@ var ManageAuthorPage = React.createClass({displayName: "ManageAuthorPage",
       errors: {},
       dirty: false
     };
+  },
+
+  componentWillMount: function(){
+    var authorId = this.props.params.id;
+    if(authorId){
+      this.setState({author: AuthorApi.getAuthorById(authorId)});
+    }
   },
 
   setAuthorState: function(event){
@@ -47786,6 +47794,7 @@ var routes = (
       React.createElement(DefaultRoute, {handler: require('./components/homePage')}), 
       React.createElement(Route, {name: "authors", handler: require('./components/authors/authorPage')}), 
       React.createElement(Route, {name: "addAuthor", path: "author", handler: require('./components/authors/manageAuthorPage')}), 
+      React.createElement(Route, {name: "manageAuthor", path: "author/:id", handler: require('./components/authors/manageAuthorPage')}), 
       React.createElement(Route, {name: "about", handler: require('./components/about/aboutPage')}), 
       React.createElement(NotFoundRoute, {handler: require('./components/notFoundPage')}), 
       React.createElement(Redirect, {from: "about-us", to: "about"}), 
