@@ -4084,6 +4084,11 @@
       "from": "lodash@latest",
       "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.6.1.tgz"
     },
+    "object-assign": {
+      "version": "4.0.1",
+      "from": "object-assign@latest",
+      "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.0.1.tgz"
+    },
     "react": {
       "version": "0.13.3",
       "from": "https://registry.npmjs.org/react/-/react-0.13.3.tgz",
