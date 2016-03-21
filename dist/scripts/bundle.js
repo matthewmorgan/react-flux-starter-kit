@@ -47401,7 +47401,7 @@ var About = React.createClass({displayName: "About",
     },
     willTransitionFrom: function(transition, component){
       if(!confirm('Are you sure you want to leave a page that\'s this exciting?')){
-        transition.about();
+        transition.abort();
       }
     }
   },
@@ -47458,6 +47458,12 @@ var React = require('react');
 var Input = require('../common/textInput');
 
 var AuthorForm = React.createClass({displayName: "AuthorForm",
+  propTypes: {
+    author: React.PropTypes.object.isRequired,
+    onSave: React.PropTypes.func.isRequired,
+    onChange: React.PropTypes.func.isRequired,
+    errors: React.PropTypes.object
+  },
   render: function(){
     return (
       React.createElement("form", null, 
@@ -47574,14 +47580,24 @@ var ManageAuthorPage = React.createClass({displayName: "ManageAuthorPage",
     Router.Navigation
   ],
 
+  statics: {
+    willTransitionFrom: function(transition, component){
+      if(component.state.dirty && !confirm('Leave without saving?')){
+        transition.abort();
+      }
+    }
+  },
+
   getInitialState: function(){
     return {
       author: { id: '', firstName: '', lastName: '' },
-      errors: {}
+      errors: {},
+      dirty: false
     };
   },
 
   setAuthorState: function(event){
+    this.setState({ dirty: true});
     var field = event.target.name;
     var value = event.target.value;
     this.state.author[field] = value;
@@ -47614,6 +47630,7 @@ var ManageAuthorPage = React.createClass({displayName: "ManageAuthorPage",
     }
 
     AuthorApi.saveAuthor(this.state.author);
+    this.setState({ dirty: false});
     toastr.success('Author saved.');
     this.transitionTo("authors");
   },
