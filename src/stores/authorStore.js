@@ -29,6 +29,7 @@ var AuthorStore = assign({}, EventEmitter.prototype, {
   getAuthorById: function (id) {
     return _.find(authors, {id: id});
   }
+
 });
 
 Dispatcher.register(function (action) {
