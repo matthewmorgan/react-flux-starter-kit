@@ -33,24 +33,25 @@ var AuthorStore = assign({}, EventEmitter.prototype, {
 });
 
 Dispatcher.register(function (action) {
+  var data = action.data;
   switch (action.actionType) {
     case ActionTypes.INITIALIZE:
-      authors = action.initialData.authors;
+      authors = data.authors;
       AuthorStore.emitChange();
       break;
     case ActionTypes.CREATE_AUTHOR:
-      authors.push(action.author);
+      authors.push(data.author);
       AuthorStore.emitChange();
       break;
     case ActionTypes.UPDATE_AUTHOR:
-      var existingAuthor = _.find(authors, {id: action.author.id});
+      var existingAuthor = _.find(authors, {id: data.author.id});
       var existingAuthorIndex = _.indexOf(authors, existingAuthor);
-      authors.splice(existingAuthorIndex, 1, action.author);
+      authors.splice(existingAuthorIndex, 1, data.author);
       AuthorStore.emitChange();
       break;
     case ActionTypes.DELETE_AUTHOR:
       _.remove(authors, function(author){
-        return action.id === author.id;
+        return data.id === author.id;
       });
       AuthorStore.emitChange();
       break;

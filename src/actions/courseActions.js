@@ -9,14 +9,18 @@ var CourseActions = {
     var newCourse = CourseApi.saveCourse(course);
     Dispatcher.dispatch({
       actionType: ActionTypes.CREATE_COURSE,
-      course: newCourse
+      data: {
+        course: newCourse
+      }
     });
   },
   updateCourse: function(course){
     var updatedCourse = CourseApi.saveCourse(course);
     Dispatcher.dispatch({
       actionType: ActionTypes.UPDATE_COURSE,
-      course: updatedCourse
+      data: {
+        course: updatedCourse
+      }
     });
   },
   deleteCourse: function(id){
@@ -24,7 +28,9 @@ var CourseActions = {
     CourseApi.deleteCourse(id);
     Dispatcher.dispatch({
       actionType: ActionTypes.DELETE_COURSE,
-      id: id
+      data: {
+        id: id
+      }
     });
   }
 };

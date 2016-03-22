@@ -9,7 +9,7 @@ var InitializeActions = {
   initApp: function(){
     Dispatcher.dispatch({
       actionType: ActionTypes.INITIALIZE,
-      initialData: {
+      data: {
         authors: AuthorApi.getAllAuthors(),
         courses: CourseApi.getAllCourses()
       }

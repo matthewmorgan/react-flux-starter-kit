@@ -32,24 +32,31 @@ var CourseStore = assign({}, EventEmitter.prototype, {
 });
 
 Dispatcher.register(function (action) {
+  var data = action.data;
   switch (action.actionType) {
     case ActionTypes.INITIALIZE:
-      courses = action.initialData.courses;
+      courses = data.courses;
       CourseStore.emitChange();
       break;
     case ActionTypes.CREATE_COURSE:
-      courses.push(action.course);
+      courses.push(data.course);
       CourseStore.emitChange();
       break;
     case ActionTypes.UPDATE_COURSE:
-      var existingCourse = _.find(courses, {id: action.course.id});
+      var existingCourse = _.find(courses, {id: data.course.id});
       var existingCourseIndex = _.indexOf(courses, existingCourse);
-      courses.splice(existingCourseIndex, 1, action.course);
+      courses.splice(existingCourseIndex, 1, data.course);
       CourseStore.emitChange();
       break;
     case ActionTypes.DELETE_COURSE:
       _.remove(courses, function(course){
-        return action.id === course.id;
+        return data.id === course.id;
+      });
+      CourseStore.emitChange();
+      break;
+    case ActionTypes.DELETE_AUTHOR:
+      _.remove(courses, function(course){
+        return data.id === course.author.id;
       });
       CourseStore.emitChange();
       break;
