@@ -32,7 +32,6 @@ var ManageCoursePage = React.createClass({
   },
 
   componentWillMount: function(){
-    AuthorStore.addChangeListener(this._onChange);
     var courseId = this.props.params.id;
     if(courseId){
       this.state.course = CourseStore.getCourseById(courseId);
@@ -44,14 +43,6 @@ var ManageCoursePage = React.createClass({
       };
     });
     this.setState(this.state);
-  },
-
-  componentWillUnmount: function(){
-    AuthorStore.removeChangeListener(this._onChange);
-  },
-
-  _onChange: function(){
-    this.setState({authors: AuthorStore.getAllAuthors()});
   },
 
   setCourseState: function(event) {
